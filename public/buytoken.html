@@ -41,16 +41,19 @@
 <div class="col-lg-12">
 	<div class="form-group row">
 	  <div class="col-2"></div>
-	  <label for="example-datetime-local-input" class="col-2 col-form-label">Token :</label>
+	  <label for="example-datetime-local-input" class="col-2 col-form-label">Token TBM: </label>
 	  <div class="col-6">
+		<input class="col-9" class="form-control" type="number" id="ownerToken" disabled="disabled" value="0" id="example-number-input">
+    <button  type="button" onclick="javascript:getToken()" class="btn btn-warning col-2">Refresh</button>
 	  </div>
-	  <div class="col-2"></div>
+	  <div class="col-2">
+    </div>
 	</div>
 	<div class="form-group row">
 	  <div class="col-2"></div>
 	  <label for="example-datetime-local-input" class="col-2 col-form-label">Total :</label>
 	  <div class="col-6">
-		<input class="form-control" type="number" value="42" id="example-number-input">
+		<input class="form-control" type="number" id="total" value="0" id="example-number-input">
 	  </div>
 	   <div class="col-2"></div>
 	</div>
@@ -62,16 +65,179 @@
 	  </div>
 	   <div class="col-2"></div>
 	</div>
-	
+
 	<div class="form-group row">
 	  <div class="col-3"></div>
 	  <div class="col-6">
-		<center><button type="button" class="btn btn-primary">Save</button></center>
+		<center><button type="button" onclick="javascript:buyToken()"  class="btn btn-primary">Save</button></center>
 	  </div>
 	   <div class="col-3"></div>
 	</div>
 </div>
 </div>
 </body>
-</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+<script>
+
+function getToken() {
+  console.log('SimpleContract',SimpleContract);
+  SimpleContract.getToken(web3.eth.accounts[0], function(errorGet, resultGet) {
+    document.getElementById('ownerToken').value = resultGet;
+    console.log('getToken', resultGet);
+  })
+}
+
+function buyToken() {
+  newBalance = parseInt(document.getElementById("total").value);
+  SimpleContract.buyToken(newBalance, function(error, result) {
+    if(error)
+      return;
+    console.log('buyToken', result);
+  })
+}
+
+// Initializing
+if (typeof web3 !== 'undefined') {
+  web3 = new Web3(web3.currentProvider);
+}
+
+// Get default address
+web3.eth.defaultAccount = web3.eth.accounts[0];
+
+
+
+// TODO: Replace your SimpleContract abi here
+var abi = [
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "token",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyToken",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_firstName",
+        "type": "string"
+      },
+      {
+        "name": "_lastName",
+        "type": "string"
+      }
+    ],
+    "name": "createMember",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "token",
+        "type": "uint256"
+      }
+    ],
+    "name": "setToken",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_address",
+        "type": "address"
+      }
+    ],
+    "name": "getToken",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "members",
+    "outputs": [
+      {
+        "name": "firstName",
+        "type": "string"
+      },
+      {
+        "name": "lastName",
+        "type": "string"
+      },
+      {
+        "name": "current",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "memberToOwner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }
+];
+// TODO: Replace your SimpleContract contract address here
+var contractAddress = '0x94f47fdf20f82a0caa5ce411f1a5bde307bbe622';
+
+// Create an interface to SimpleContract on TomoChain
+var SimpleContractContract = web3.eth.contract(abi);
+var SimpleContract = SimpleContractContract.at(contractAddress);
+
+// Get Balance on the first load
+//getBalance();
+getToken();
+console.log('test')
+</script>
 </html>
