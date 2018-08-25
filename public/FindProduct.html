@@ -2,84 +2,116 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <title>Buy Token</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <meta charset="utf-8" />
+  <title>Buy Token</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-danger">
-  <a class="navbar-brand" href="#">Business Matching</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+    <a class="navbar-brand" href="#">Business Matching</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="setproduct.html">Set Product</a>
-      </li>
-	  <li class="nav-item">
-        <a class="nav-link" href="buytoken.html">BuyToken</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="setpricetoken.html">SetPriceToken</a>
-      </li>
-	  <li class="nav-item active">
-        <a class="nav-link" href="findproduct.html">Find Product</a>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="setproduct.html">Set Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="buytoken.html">BuyToken</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="setpricetoken.html">SetPriceToken</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="findproduct.html">Find Product</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <h1>Find Product</h1>
+    <hr>
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-1 text-right">
+          Search
+        </div>
+        <div class="col-5"><input type="text" id="nameSearch" class="form-control" id="exampleInputName" aria-describedby="nameHelp" placeholder="Input Product name"></div>
+        <div class="col-3"><button type="button" onclick="javascript:findProduct()" class="btn btn-primary">Search</button></div>
+        <div class="col-auto"> </div>
+      </div>
+      <br>
+      <div class="row">
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Total</th>
+              <th>Price</th>
+              <th>Place</th>
+              <th>Province</th>
+              <th>Country</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableProduct">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
   </div>
-</nav>
-<div class="container">
-	<h1>Find Product</h1>
-<hr>
-		<div class="col-lg-12">
-			<div class="row">
-				<div class="col-1 text-right">
-					Search
-				</div>
-				<div class="col-5"><input type="name" class="form-control" id="exampleInputName" aria-describedby="nameHelp" placeholder="Input Product name"></div>
-				<div class="col-3"><button type="submit" class="btn btn-primary">Search</button></div>
-				<div class="col-auto"> </div>
-			</div>
-			<br>
-			<div class="row">
-				
-				<table class="table table-hover">
-					<thead>
-					  <tr>
-						<th>No</th>
-						<th>Product Name</th>
-						<th>Total</th>
-						<th>Type</th>
-						<th>Price</th>
-						<th>Province</th>
-						<th>Country</th>
-						<th>Action</th>
-					  </tr>
-					</thead>
-					<tbody>
-					  <tr>
-						<td>No</td>
-						<td>Product Name</td>
-						<td>Total</td>
-						<td>Type</td>
-						<td>Price</td>
-						<td>Province</td>
-						<td>Country</td>
-						<td>View</td>
-					  </tr>
-					</tbody>
-				  </table>
-			</div>
-		</div>
-		
-		
-	</div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+<script src="global.js"></script>
+<script>
+
+function findProduct() {
+  let nameSearch = document.getElementById('nameSearch').value;
+  console.log('findProduct');
+  SimpleContract.getAllProduct(nameSearch, function(errorGet, resultGet) {
+
+    console.log('findProduct', resultGet);
+    let str = '';
+    $('#tableProduct').html('');
+    for (var i = 0; i < resultGet.length; i++) {
+      SimpleContract.getProductById(resultGet[i] , function(errorGet, resultGetProductDetail){
+        console.log('resultGet',resultGet);
+        str = '<tr> \
+        <td>' + resultGetProductDetail[2] + '</td> \
+        <td>' + resultGetProductDetail[3] + '</td> \
+        <td>' + resultGetProductDetail[4] + '</td> \
+        <td>' + resultGetProductDetail[5] + '</td> \
+        <td>' + resultGetProductDetail[6] + '</td> \
+        <td>' + resultGetProductDetail[7] + '</td> \
+        <td> <button onclick="orderMatching(' + resultGetProductDetail[0] + ')" >Buy</button></td> \
+        </tr>';
+        $('#tableProduct').append(str);
+      });
+
+      console.log('id', resultGet[i]);
+    }
+  })
+}
+
+function orderMatching(productId) {
+  console.log('orderMatching productId', productId);
+  SimpleContract.OrderMatching(productId, function(errorGet, resultGet){
+    console.log('orderMatching', resultGet);
+  });
+}
+
+</script>
 </html>
