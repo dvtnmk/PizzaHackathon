@@ -91,7 +91,10 @@ function getToken() {
 
 function buyToken() {
   newBalance = parseInt(document.getElementById("total").value);
-  SimpleContract.buyToken(newBalance, function(error, result) {
+  let balancePrice = newBalance * 0.001;
+  console.log('wei', web3._extend.utils.toWei(balancePrice, 'ether'));
+  console.log('SimpleContract.buyToken',SimpleContract.buyToken);
+  SimpleContract.buyToken(newBalance, { value: web3._extend.utils.toWei(balancePrice, 'ether')}, function(error, result) {
     if(error)
       return;
     console.log('buyToken', result);
@@ -116,126 +119,245 @@ web3.eth.defaultAccount = web3.eth.accounts[0];
 
 // TODO: Replace your SimpleContract abi here
 var abi = [
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "token",
-        "type": "uint256"
-      }
-    ],
-    "name": "buyToken",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_firstName",
-        "type": "string"
-      },
-      {
-        "name": "_lastName",
-        "type": "string"
-      }
-    ],
-    "name": "createMember",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "token",
-        "type": "uint256"
-      }
-    ],
-    "name": "setToken",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_address",
-        "type": "address"
-      }
-    ],
-    "name": "getToken",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "members",
-    "outputs": [
-      {
-        "name": "firstName",
-        "type": "string"
-      },
-      {
-        "name": "lastName",
-        "type": "string"
-      },
-      {
-        "name": "current",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "memberToOwner",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  }
-];
+ {
+  "constant": false,
+  "inputs": [
+   {
+    "name": "token",
+    "type": "uint256"
+   }
+  ],
+  "name": "buyToken",
+  "outputs": [],
+  "payable": true,
+  "stateMutability": "payable",
+  "type": "function"
+ },
+ {
+  "constant": false,
+  "inputs": [
+   {
+    "name": "_name",
+    "type": "string"
+   },
+   {
+    "name": "_price",
+    "type": "uint256"
+   },
+   {
+    "name": "_total",
+    "type": "uint256"
+   },
+   {
+    "name": "_place",
+    "type": "string"
+   },
+   {
+    "name": "_province",
+    "type": "string"
+   },
+   {
+    "name": "_country",
+    "type": "string"
+   }
+  ],
+  "name": "setProduct",
+  "outputs": [],
+  "payable": false,
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "constant": true,
+  "inputs": [
+   {
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "listProductId",
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "payable": false,
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "constant": true,
+  "inputs": [
+   {
+    "name": "_address",
+    "type": "address"
+   }
+  ],
+  "name": "getToken",
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "payable": false,
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "constant": true,
+  "inputs": [
+   {
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "members",
+  "outputs": [
+   {
+    "name": "firstName",
+    "type": "string"
+   },
+   {
+    "name": "lastName",
+    "type": "string"
+   },
+   {
+    "name": "current",
+    "type": "address"
+   }
+  ],
+  "payable": false,
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "constant": true,
+  "inputs": [
+   {
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "products",
+  "outputs": [
+   {
+    "name": "id",
+    "type": "uint256"
+   },
+   {
+    "name": "owner",
+    "type": "address"
+   },
+   {
+    "name": "name",
+    "type": "string"
+   },
+   {
+    "name": "price",
+    "type": "uint256"
+   },
+   {
+    "name": "total",
+    "type": "uint256"
+   },
+   {
+    "name": "place",
+    "type": "string"
+   },
+   {
+    "name": "province",
+    "type": "string"
+   },
+   {
+    "name": "country",
+    "type": "string"
+   }
+  ],
+  "payable": false,
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "constant": true,
+  "inputs": [
+   {
+    "name": "name",
+    "type": "string"
+   }
+  ],
+  "name": "getAllProduct",
+  "outputs": [
+   {
+    "name": "",
+    "type": "uint256[]"
+   }
+  ],
+  "payable": false,
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "constant": true,
+  "inputs": [
+   {
+    "name": "",
+    "type": "uint256"
+   }
+  ],
+  "name": "memberToOwner",
+  "outputs": [
+   {
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "payable": false,
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "constant": false,
+  "inputs": [
+   {
+    "name": "token",
+    "type": "uint256"
+   }
+  ],
+  "name": "setToken",
+  "outputs": [],
+  "payable": false,
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "constant": false,
+  "inputs": [
+   {
+    "name": "_firstName",
+    "type": "string"
+   },
+   {
+    "name": "_lastName",
+    "type": "string"
+   }
+  ],
+  "name": "createMember",
+  "outputs": [],
+  "payable": false,
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "payable": false,
+  "stateMutability": "nonpayable",
+  "type": "constructor"
+ }
+]
 // TODO: Replace your SimpleContract contract address here
-var contractAddress = '0x94f47fdf20f82a0caa5ce411f1a5bde307bbe622';
+var contractAddress = '0x71f136695d5bb838a47a6affcd97c8ea6851903a';
 
 // Create an interface to SimpleContract on TomoChain
 var SimpleContractContract = web3.eth.contract(abi);
