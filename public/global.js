@@ -27,38 +27,6 @@ var abi = [
   "constant": false,
   "inputs": [
    {
-    "name": "_firstName",
-    "type": "string"
-   },
-   {
-    "name": "_lastName",
-    "type": "string"
-   }
-  ],
-  "name": "createMember",
-  "outputs": [],
-  "payable": false,
-  "stateMutability": "nonpayable",
-  "type": "function"
- },
- {
-  "constant": false,
-  "inputs": [
-   {
-    "name": "_productId",
-    "type": "uint256"
-   }
-  ],
-  "name": "OrderMatching",
-  "outputs": [],
-  "payable": false,
-  "stateMutability": "nonpayable",
-  "type": "function"
- },
- {
-  "constant": false,
-  "inputs": [
-   {
     "name": "_name",
     "type": "string"
    },
@@ -87,45 +55,6 @@ var abi = [
   "outputs": [],
   "payable": false,
   "stateMutability": "nonpayable",
-  "type": "function"
- },
- {
-  "constant": false,
-  "inputs": [
-   {
-    "name": "token",
-    "type": "uint256"
-   }
-  ],
-  "name": "setToken",
-  "outputs": [],
-  "payable": false,
-  "stateMutability": "nonpayable",
-  "type": "function"
- },
- {
-  "inputs": [],
-  "payable": false,
-  "stateMutability": "nonpayable",
-  "type": "constructor"
- },
- {
-  "constant": true,
-  "inputs": [
-   {
-    "name": "name",
-    "type": "string"
-   }
-  ],
-  "name": "getAllProduct",
-  "outputs": [
-   {
-    "name": "",
-    "type": "uint256[]"
-   }
-  ],
-  "payable": false,
-  "stateMutability": "view",
   "type": "function"
  },
  {
@@ -198,121 +127,135 @@ var abi = [
   "constant": true,
   "inputs": [
    {
-    "name": "",
-    "type": "uint256"
-   }
-  ],
-  "name": "listProductId",
-  "outputs": [
-   {
-    "name": "",
-    "type": "uint256"
-   }
-  ],
-  "payable": false,
-  "stateMutability": "view",
-  "type": "function"
- },
- {
-  "constant": true,
-  "inputs": [
-   {
-    "name": "",
-    "type": "uint256"
-   }
-  ],
-  "name": "members",
-  "outputs": [
-   {
-    "name": "firstName",
-    "type": "string"
-   },
-   {
-    "name": "lastName",
-    "type": "string"
-   },
-   {
-    "name": "current",
-    "type": "address"
-   }
-  ],
-  "payable": false,
-  "stateMutability": "view",
-  "type": "function"
- },
- {
-  "constant": true,
-  "inputs": [
-   {
-    "name": "",
-    "type": "uint256"
-   }
-  ],
-  "name": "memberToOwner",
-  "outputs": [
-   {
-    "name": "",
-    "type": "address"
-   }
-  ],
-  "payable": false,
-  "stateMutability": "view",
-  "type": "function"
- },
- {
-  "constant": true,
-  "inputs": [
-   {
-    "name": "",
-    "type": "uint256"
-   }
-  ],
-  "name": "products",
-  "outputs": [
-   {
-    "name": "id",
-    "type": "uint256"
-   },
-   {
-    "name": "owner",
-    "type": "address"
-   },
-   {
     "name": "name",
     "type": "string"
-   },
+   }
+  ],
+  "name": "getAllProduct",
+  "outputs": [
    {
-    "name": "price",
-    "type": "uint256"
-   },
-   {
-    "name": "total",
-    "type": "uint256"
-   },
-   {
-    "name": "place",
-    "type": "string"
-   },
-   {
-    "name": "province",
-    "type": "string"
-   },
-   {
-    "name": "country",
-    "type": "string"
+    "name": "",
+    "type": "uint256[]"
    }
   ],
   "payable": false,
   "stateMutability": "view",
   "type": "function"
+ },
+ {
+  "constant": false,
+  "inputs": [
+   {
+    "name": "_price",
+    "type": "uint256"
+   }
+  ],
+  "name": "setPriceToken",
+  "outputs": [],
+  "payable": false,
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "constant": true,
+  "inputs": [],
+  "name": "owner",
+  "outputs": [
+   {
+    "name": "",
+    "type": "address"
+   }
+  ],
+  "payable": false,
+  "stateMutability": "view",
+  "type": "function"
+ },
+ {
+  "constant": false,
+  "inputs": [
+   {
+    "name": "_productId",
+    "type": "uint256"
+   }
+  ],
+  "name": "OrderMatching",
+  "outputs": [],
+  "payable": false,
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "constant": false,
+  "inputs": [
+   {
+    "name": "newOwner",
+    "type": "address"
+   }
+  ],
+  "name": "transferOwnership",
+  "outputs": [],
+  "payable": false,
+  "stateMutability": "nonpayable",
+  "type": "function"
+ },
+ {
+  "inputs": [],
+  "payable": false,
+  "stateMutability": "nonpayable",
+  "type": "constructor"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": false,
+    "name": "productId",
+    "type": "uint256"
+   }
+  ],
+  "name": "OrderComplete",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": false,
+    "name": "buyer",
+    "type": "address"
+   }
+  ],
+  "name": "buyTokenComplete",
+  "type": "event"
+ },
+ {
+  "anonymous": false,
+  "inputs": [
+   {
+    "indexed": true,
+    "name": "previousOwner",
+    "type": "address"
+   },
+   {
+    "indexed": true,
+    "name": "newOwner",
+    "type": "address"
+   }
+  ],
+  "name": "OwnershipTransferred",
+  "type": "event"
  }
 ];
 // TODO: Replace your SimpleContract contract address here
-var contractAddress = '0xca9989760f65d18a774fc2c0118fd17edc029075';
+var contractAddress = '0xa05e4774b4ea89cff888891c6e5f1c8218ca2179';
 
 // Create an interface to SimpleContract on TomoChain
 var SimpleContractContract = web3.eth.contract(abi);
 var SimpleContract = SimpleContractContract.at(contractAddress);
+
+console.log('web3',  web3);
+console.log('SimpleContract sub', SimpleContract);
+
 
 // Get Balance on the first load
 //getBalance();

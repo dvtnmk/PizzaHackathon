@@ -2,19 +2,39 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
-    <title>Buy Tokens</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <meta charset="utf-8" />
+  <title>Buy Tokens</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <style>
+  .loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid blue;
+    border-bottom: 16px solid blue;
+    width: 80px;
+    height: 80px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
 
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-danger">
-  <a class="navbar-brand" href="#">Business Matching</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
+  <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+    <a class="navbar-brand" href="#">Business Matching</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item ">
@@ -35,47 +55,50 @@
     </ul>
   </div>
 </nav>
-<div class="container">
-<h1>Buy Token</h1>
-<hr>
-<div class="col-lg-12">
-	<div class="form-group row">
-	  <div class="col-2"></div>
-	  <label for="example-datetime-local-input" class="col-2 col-form-label">Token TBM: </label>
-	  <div class="col-6">
-		<input class="col-9 form-control" style="float:left;" type="number" id="ownerToken" disabled="disabled" value="0" id="example-number-input" />
-    <button  type="button" onclick="javascript:getToken()" class="btn btn-warning col-2">Refresh</button>
-	  </div>
-	  <div class="col-2">
-    </div>
-	</div>
-	<div class="form-group row">
-	  <div class="col-2"></div>
-	  <label for="example-datetime-local-input" class="col-2 col-form-label">Total :</label>
-	  <div class="col-6">
-		<input class="form-control" type="number" id="total" onkeyup="javascript:totalValueChange(this.value);" value="1" id="example-number-input">
-	  </div>
-	   <div class="col-2"></div>
-	</div>
-	<div class="form-group row">
-	  <div class="col-2"></div>
-	  <label for="example-datetime-local-input" class="col-2 col-form-label">1 TBM = 0.001 ETH</label>
-	  <div class="col-6" id="totalPrice" style="padding-top:7px;">
-      0.001
-		<!-- Ether remainning -->
-	  </div>
-	   <div class="col-2"></div>
-	</div>
+  <div class="container">
+    <h1>Buy Token</h1>
+    <hr>
+    <div class="col-lg-12">
+      <div class="form-group row">
+        <div class="col-2"></div>
+        <label for="example-datetime-local-input" class="col-2 col-form-label">Token TBM: </label>
+        <div class="col-6">
+          <input class="col-9 form-control" style="float:left;" type="number" id="ownerToken" disabled="disabled" value="0" id="example-number-input" />
+          <button  type="button" onclick="javascript:getToken()" class="btn btn-warning col-2">Refresh</button>
+        </div>
+        <div class="col-2">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-2"></div>
+        <label for="example-datetime-local-input" class="col-2 col-form-label">Total :</label>
+        <div class="col-6">
+          <input class="form-control" type="number" id="total" onkeyup="javascript:totalValueChange(this.value);" value="1" id="example-number-input">
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="form-group row">
+        <div class="col-2"></div>
+        <label for="example-datetime-local-input" class="col-2 col-form-label">1 TBM = 0.001 ETH</label>
+        <div class="col-6" id="totalPrice" style="padding-top:7px;">
+          0.001
+          <!-- Ether remainning -->
+        </div>
+        <div class="col-2"></div>
+      </div>
 
-	<div class="form-group row">
-	  <div class="col-3"></div>
-	  <div class="col-6">
-		<center><button type="button" onclick="javascript:buyToken()"  class="btn btn-primary">Save</button></center>
-	  </div>
-	   <div class="col-3"></div>
-	</div>
-</div>
-</div>
+      <div class="form-group row">
+        <div class="col-3"></div>
+        <div class="col-6">
+          <center>
+            <button type="button" id="btnBuyToken" onclick="javascript:buyToken()"  class="btn btn-primary">Save</button>
+            <div class="loader" style="display:none;" id="loader"></div>
+          </center>
+        </div>
+        <div class="col-3"></div>
+      </div>
+    </div>
+  </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
@@ -97,9 +120,11 @@ function buyToken() {
   console.log('SimpleContract.buyToken',SimpleContract.buyToken);
   SimpleContract.buyToken(newBalance, { value: web3._extend.utils.toWei(balancePrice, 'ether')}, function(error, result) {
     if(error)
-      return;
+    return;
     console.log('buyToken', result);
   })
+  $('#btnBuyToken').hide();
+  $('#loader').show();
 }
 
 function totalValueChange(value){
@@ -107,6 +132,15 @@ function totalValueChange(value){
   document.getElementById('totalPrice').innerText = valuePrice;
   console.log('value', value);
 }
+
+let buyTokenComplete = SimpleContract.buyTokenComplete();
+buyTokenComplete.watch(function(error, result){
+
+  $('#btnBuyToken').show();
+  $('#loader').hide();
+  alert('Buy Token Completed');
+  getToken();
+});
 
 getToken();
 </script>

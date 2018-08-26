@@ -2,10 +2,32 @@
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
   <meta charset="utf-8" />
   <title>Find Product</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  <style>
+  .loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid blue;
+    border-bottom: 16px solid blue;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
 
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  </style>
 </head>
 <body>
 
@@ -44,8 +66,19 @@
           Search
         </div>
         <div class="col-5"><input type="text" id="nameSearch" class="form-control" id="exampleInputName" aria-describedby="nameHelp" placeholder="Input Product name"></div>
-        <div class="col-3"><button type="button" onclick="javascript:findProduct()" class="btn btn-primary">Search</button></div>
+        <div class="col-3">
+          <button type="button" onclick="javascript:findProduct()" class="btn btn-primary">Search</button>
+        </div>
         <div class="col-auto"> </div>
+      </div>
+      <div class="row" style="margin-top:20px;">
+        <div class="col-5"></div>
+
+        <div class="col-2">
+          <div class="loader" style="display:none;"  id="loader"></div>
+        </div>
+
+        <div class="col-5"></div>
       </div>
       <br>
       <div class="row">
@@ -71,6 +104,7 @@
 
 
   </div>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -111,7 +145,14 @@ function orderMatching(productId) {
   SimpleContract.OrderMatching(productId, function(errorGet, resultGet){
     console.log('orderMatching', resultGet);
   });
+  $('#loader').show();
 }
+
+let OrderComplete = SimpleContract.OrderComplete();
+OrderComplete.watch(function(error, result){
+  alert('Order Completed');
+  $('#loader').hide();
+});
 
 </script>
 </html>
