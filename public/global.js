@@ -247,7 +247,7 @@ var abi = [
  }
 ];
 // TODO: Replace your SimpleContract contract address here
-var contractAddress = '0xa05e4774b4ea89cff888891c6e5f1c8218ca2179';
+var contractAddress = '0x4cecaa54a5e4be3a8e3891c9d12bc750c8152846';
 
 // Create an interface to SimpleContract on TomoChain
 var SimpleContractContract = web3.eth.contract(abi);
