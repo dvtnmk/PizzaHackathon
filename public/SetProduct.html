@@ -5,7 +5,11 @@
     <meta charset="utf-8" />
     <title> SetProduct </title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+	<style> 
+		.topMargin{
+			margin-top:1rem;
+		}
+	</style>
 </head>
 <body>
 <form>
@@ -36,7 +40,7 @@
 	  </div>
 	</nav>
 	<div class="container">
-	<h1>Set Product</h1>
+	<h1>Set Product</h1> 	
 <hr>
 		<div class="col-lg-12"><div class="row">
 			<div class="col-lg-2">Name</div>
@@ -44,13 +48,13 @@
 			<div class="col-lg-2">Place</div>
 			<div class="col-lg-4"><input type="text" class="form-control" id="place" value="" aria-describedby="totalHelp" placeholder="Enter place"></div>
 		</div></div>
-		<div class="col-lg-12"><div class="row">
+		<div class="col-lg-12 topMargin"><div class="row">
 			<div class="col-lg-2">Price</div>
 			<div class="col-lg-4"><input type="number" class="form-control" id="price" value="" aria-describedby="priceHelp" placeholder="Enter price"></div>
 			<div class="col-lg-2">Total</div>
 			<div class="col-lg-4"><input type="number" class="form-control" id="total" value="" aria-describedby="totalHelp" placeholder="Enter total product"></div>
 		</div></div>
-		<div class="col-lg-12"><div class="row">
+		<div class="col-lg-12 topMargin"><div class="row">
 			<div class="col-lg-2">Province</div>
 			<div class="col-lg-4"><input type="text" class="form-control" id="province" value="" aria-describedby="provinceHelp" placeholder="Enter province"></div>
 			<div class="col-lg-2">Country</div>
@@ -58,7 +62,7 @@
 		</div></div>
 		<div class="col-lg-12" style="margin-top:10px;"><div class="row">
 			<div class="col-lg-4"></div>
-			<div class="col-lg-4"><center><button type="button" onclick="javascript:setProduct()" class="btn btn-primary">Submit</button></center></div>
+			<div class="col-lg-4"><center><button type="button" onclick="javascript:setProduct()" class="btn btn-primary topMargin">Submit</button></center></div>
 			<div class="col-lg-4"></div>
 		</div></div>
 	</div>
